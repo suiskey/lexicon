@@ -1,0 +1,96 @@
+{
+  "lexicon": 1,
+  "id": "com.suiskey.community.profile",
+  "revision": 1,
+  "description": "A community identity profile record. Stores information about what a person practices, how they want to collaborate, and where their work can be found. Additive to app.bsky.actor.profile — intended to be read alongside it, not instead of it.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "self",
+      "description": "A user's community profile. Singleton record — one per DID.",
+      "record": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "focus": {
+            "type": "array",
+            "description": "What this person actively practices or works in. Free-form strings — no controlled vocabulary enforced at the schema level.",
+            "items": { "type": "string", "maxGraphemes": 64 },
+            "maxLength": 20
+          },
+          "platformLinks": {
+            "type": "array",
+            "description": "Identity across platforms. Each entry names a platform, provides a URL, and an optional human-readable label.",
+            "items": { "type": "ref", "ref": "#platformLink" },
+            "maxLength": 20
+          },
+          "collaborationStatus": {
+            "type": "string",
+            "description": "Whether this person is open to collaboration.",
+            "knownValues": ["open", "closed", "activelySeeking"]
+          },
+          "collaborationInterests": {
+            "type": "array",
+            "description": "Focus areas or skills wanted in collaborators. Free-form strings.",
+            "items": { "type": "string", "maxGraphemes": 64 },
+            "maxLength": 20
+          },
+          "featuredLinks": {
+            "type": "array",
+            "description": "Links to external work, projects, or resources. Each entry has a URL and an optional label.",
+            "items": { "type": "ref", "ref": "#featuredLink" },
+            "maxLength": 10
+          },
+          "featuredItems": {
+            "type": "array",
+            "description": "AT URIs pointing to native Atmosphere objects — posts, collections, feeds, etc. Supplements the single pinnedPost in app.bsky.actor.profile.",
+            "items": { "type": "string", "format": "at-uri" },
+            "maxLength": 10
+          },
+          "location": {
+            "type": "string",
+            "description": "Optional freeform location string.",
+            "maxGraphemes": 64
+          }
+        }
+      }
+    },
+    "platformLink": {
+      "type": "object",
+      "description": "A named platform identity link.",
+      "required": ["platform", "url"],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Platform name, e.g. 'GitHub', 'Instagram', 'Bandcamp'.",
+          "maxGraphemes": 64
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional human-readable label, e.g. a username or page name.",
+          "maxGraphemes": 128
+        }
+      }
+    },
+    "featuredLink": {
+      "type": "object",
+      "description": "An external URL with an optional display label.",
+      "required": ["url"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional display label for the link.",
+          "maxGraphemes": 128
+        }
+      }
+    }
+  }
+}
