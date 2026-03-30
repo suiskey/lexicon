@@ -96,7 +96,6 @@ If you are building an app that implements `com.suiskey.community.profile`, add 
 ## Reference Implementations
 
 - **[built.blue](https://built.blue)** — community labeler and feed generator for Atmosphere creators
-- **[blento.app](https://blento.app)** — personal website builder using AT Protocol as backend *(prospective)*
 
 ---
 
